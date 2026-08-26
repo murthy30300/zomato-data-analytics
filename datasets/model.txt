@@ -1,0 +1,34 @@
+users.csv : ,user_id,name,email,password,Age,Gender,Marital Status,Occupation,Monthly Income,Educational Qualifications,Family size
+reviews.csv: review_id,order_id,user_id,restaurant_id,rating,comment,review_date
+menu.csv: ,menu_id,r_id,f_id,cuisine,price
+food.csv: ,f_id,item,veg_or_non_veg
+orders.csv: order_id,order_timestamp,order_date,user_id,r_id,restaurant_city,cuisine,items_count,sales_qty,subtotal,discount,delivery_fee,gst,sales_amount,currency,payment_method,order_status,customer_rating,delivery_time_min
+restaurants.csv: ,id,name,city,rating,rating_count,cost,cuisine,lic_no,link,address,menu
+
+
+10M - orders
+23M - order items
+300k - text reviews
+
+snowflake - pass: i2p8rJWz8G5XRyG
+STORAGE_AWS_IAM_USER_ARN	String	arn:aws:iam::477504163304:user/9xu32000-s
+STORAGE_AWS_ROLE_ARN	String	arn:aws:iam::692414551571:role/snowflake-s3-role-fe
+STORAGE_AWS_EXTERNAL_ID	String	BD49415_SFCRole=5_7+oaEuVNG3qZHmHN+N1oflTL4iA=
+
+
+Account identifier GOOQRSO-QS17645
+
+Data sharing account identifier GOOQRSO.QS17645
+
+Organization name GOOQRSO
+
+Account name QS17645
+Account/Server URL GOOQRSO-QS17645.snowflakecomputing.com
+
+Login name VISHNU1702
+Role ACCOUNTADMIN
+Account locator BD49415
+Cloud platform
+AWS
+Edition
+Standard

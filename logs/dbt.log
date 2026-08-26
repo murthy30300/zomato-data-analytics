@@ -1,0 +1,64 @@
+==================== 2026-08-22T05:35:20.148113Z | 01a027f7-664e-7781-bc70-761b1c7dc82d ====================
+05:35:20.148519 [info ]: Installing dbt project and profile setup
+05:35:20.153205 [info ]: Info Created .vscode/extensions.json with dbt extension recommendation
+05:35:20.153408 [info ]: Success Project created successfully!
+05:35:20.153443 [info ]: Info Project name: jaffle_shop
+05:35:20.153456 [info ]: Info Project directory: jaffle_shop
+05:35:20.153493 [info ]: Info Setting up your profile...
+05:35:20.153740 [info ]: Info Creating new profile...
+05:35:23.705202 [info ]: No dbt_cloud.yml found - proceeding without cloud pre-population
+05:40:54.942908 [error]: [IoError (dbt1001)]: Failed to get selection for auth_method: IO error: read interrupted
+05:40:55.157131 [info ]: 
+==================== Execution Summary =====================
+Finished 'init' with 1 error [5m 35s]
+[0m11:17:07.162790 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x109ef4c70>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10ae88e80>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10ae88220>]}
+
+
+============================== 11:17:07.164295 | 4ff787b7-9599-436a-b560-f84e0c0b52cb ==============================
+[0m11:17:07.164295 [info ] [MainThread]: Running with dbt=1.10.23
+[0m11:17:07.164557 [debug] [MainThread]: running dbt with arguments {'write_json': 'True', 'quiet': 'False', 'static_parser': 'True', 'warn_error': 'None', 'target_path': 'None', 'log_cache_events': 'False', 'log_path': 'logs', 'use_experimental_parser': 'False', 'invocation_command': 'dbt init zomato', 'profiles_dir': '/Users/vishnunukala/.dbt', 'send_anonymous_usage_stats': 'True', 'printer_width': '80', 'fail_fast': 'False', 'introspect': 'True', 'debug': 'False', 'no_print': 'None', 'use_colors': 'True', 'log_format': 'default', 'indirect_selection': 'eager', 'version_check': 'True', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'empty': 'None', 'cache_selected_only': 'False', 'partial_parse': 'True'}
+[0m11:17:07.170967 [warn ] [MainThread]: [[33mWARNING[0m]: This version of dbt is deprecated and no longer receives regular patches, including for known bugs. Please upgrade to a newer supported version of dbt for new projects: https://docs.getdbt.com/docs/dbt-versions?utm_source=dbt-cli
+[0m11:17:07.171164 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'deprecated_version_invocation', 'label': '4ff787b7-9599-436a-b560-f84e0c0b52cb', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10ae88e80>]}
+[0m11:17:07.171354 [info ] [MainThread]: Creating dbt configuration folder at /Users/vishnunukala/.dbt
+[0m11:17:07.171996 [debug] [MainThread]: Starter project path: /Users/vishnunukala/Desktop/Mywork/Projects/Food-analytics/.venv/lib/python3.9/site-packages/dbt/include/starter_project
+[0m11:17:07.175268 [info ] [MainThread]: 
+Your new dbt project "zomato" was created!
+
+For more information on how to configure the profiles.yml file,
+please consult the dbt documentation here:
+
+  https://docs.getdbt.com/docs/configure-your-profile
+
+One more thing:
+
+Need help? Don't hesitate to reach out to us via GitHub issues or on Slack:
+
+  https://community.getdbt.com/
+
+Happy modeling!
+
+[0m11:17:07.175429 [info ] [MainThread]: Setting up your profile.
+[0m11:30:14.542150 [info ] [MainThread]: Profile zomato written to /Users/vishnunukala/.dbt/profiles.yml using target's profile_template.yml and your supplied values. Run 'dbt debug' to validate the connection.
+[0m11:30:14.549240 [debug] [MainThread]: Resource report: {"command_name": "init", "command_success": true, "command_wall_clock_time": 787.34937, "process_in_blocks": "0", "process_kernel_time": 0.103842, "process_mem_max_rss": "120389632", "process_out_blocks": "0", "process_user_time": 0.623277}
+[0m11:30:14.550054 [debug] [MainThread]: Command `dbt init` succeeded at 11:30:14.549850 after 787.35 seconds
+[0m11:30:14.551039 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x109ef4c70>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10a72d970>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10ae1dc70>]}
+[0m11:30:14.552035 [debug] [MainThread]: Flushing usage events
+[0m11:30:16.617021 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m12:20:07.976234 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10c677d30>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10d611be0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10d611190>]}
+
+
+============================== 12:20:07.978297 | 850d574a-d61c-420b-aaeb-c5d4a460ed10 ==============================
+[0m12:20:07.978297 [info ] [MainThread]: Running with dbt=1.10.23
+[0m12:20:07.978597 [debug] [MainThread]: running dbt with arguments {'empty': 'False', 'version_check': 'True', 'write_json': 'True', 'log_cache_events': 'False', 'target_path': 'None', 'log_format': 'default', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'cache_selected_only': 'False', 'invocation_command': 'dbt run --select staging', 'use_colors': 'True', 'warn_error': 'None', 'quiet': 'False', 'use_experimental_parser': 'False', 'printer_width': '80', 'introspect': 'True', 'profiles_dir': '/Users/vishnunukala/.dbt', 'fail_fast': 'False', 'log_path': 'logs', 'static_parser': 'True', 'no_print': 'None', 'debug': 'False', 'partial_parse': 'True', 'indirect_selection': 'eager', 'send_anonymous_usage_stats': 'True'}
+[0m12:20:07.978753 [info ] [MainThread]: This version of dbt is deprecated and no longer receives regular patches, including for known bugs. We recommend upgrading to a newer supported version of dbt: https://docs.getdbt.com/docs/dbt-versions
+[0m12:20:07.978890 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'deprecated_version_invocation', 'label': '850d574a-d61c-420b-aaeb-c5d4a460ed10', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10c677d30>]}
+[0m12:20:07.979133 [error] [MainThread]: Encountered an error:
+Runtime Error
+  No dbt_project.yml found at expected path /Users/vishnunukala/Desktop/Mywork/Projects/Food-analytics/dbt_project.yml
+  Verify that each entry within packages.yml (and their transitive dependencies) contains a file named dbt_project.yml
+  
+[0m12:20:07.980533 [debug] [MainThread]: Resource report: {"command_name": "run", "command_success": false, "command_wall_clock_time": 0.036668126, "process_in_blocks": "0", "process_kernel_time": 0.116027, "process_mem_max_rss": "98729984", "process_out_blocks": "0", "process_user_time": 0.512728}
+[0m12:20:07.980715 [debug] [MainThread]: Command `dbt run` failed at 12:20:07.980675 after 0.04 seconds
+[0m12:20:07.980853 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10c677d30>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10d611e80>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10d6112e0>]}
+[0m12:20:07.980990 [debug] [MainThread]: Flushing usage events
+[0m12:20:09.595178 [debug] [MainThread]: An error was encountered while trying to flush usage events
