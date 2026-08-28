@@ -1,4 +1,4 @@
--- parse the messy dimension (-null, 50+ rating, $200-300, city after last comma)
+-- parse the messy dimension (-null, 50+ rating, ₹ 200-300, city after last comma)
 select
     id::number as restaurant_id,
     name as restaurant_name,
@@ -8,3 +8,5 @@ select
     try_to_number(regexp_substr(rating_count,'[0-9]+')) as rating_count,
     cuisine, lic_no as license_no
 from {{source('raw' , 'restaurants')}} where try_to_number(id) is not null
+
+

@@ -7,7 +7,7 @@ sources:
         description: "This table contains the raw data of restaurants from Zomato."
       - name: users
         description: "This table contains the raw data of users from Zomato."
-      - name: foods
+      - name: food
         description: "This table contains the raw data of foods from Zomato."
       - name: menu
         description: "This table contains the raw data of menus from Zomato."
