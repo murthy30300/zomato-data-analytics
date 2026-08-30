@@ -1,3 +1,5 @@
 datasets/demo
 .venv
 jaffle_shop
+key.txt
+rsa_key.pub

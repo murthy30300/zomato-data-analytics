@@ -3,8 +3,8 @@ zomato:
     dev:
       account: GOOQRSO-QS17645
       database: ZOMATO
-      private_key_path: /Users/vishnunukala/.snowflake/rsa_key.p8
-      password: i2p8rJWz8G5XRyG
+      # private_key_path: /Users/vishnunukala/.snowflake/rsa_key.p8
+      private_key_path: /opt/airflow/keys/airflow_snowflake_key.p8
       role: DBT_ROLE
       schema: STAGING
       threads: 8
