@@ -1,242 +1,124 @@
-🍽️ Zomato AI Data Engineering — End-to-End Data Pipeline
+# AI-Powered Food Data Platform
 
-An end-to-end Data Engineering and AI Analytics project that processes Zomato-style food delivery data from raw CSV files into a cloud-based data warehouse and delivers business insights using AWS S3, Snowflake, dbt, Apache Airflow, OpenAI, and Streamlit.
+> An end-to-end **Data Engineering + AI hobby project** exploring how structured and unstructured food-delivery data can be transformed into business-ready analytics and natural-language experiences.
 
-The project demonstrates a modern data engineering architecture using a Medallion Architecture (Bronze → Silver → Gold) along with AI-powered capabilities such as LLM-based review enrichment, RAG, and Text-to-SQL.
+## Overview
 
----
+What if you could simply ask a food platform what you want instead of manually filtering, scrolling, and searching?
 
-📌 Project Overview
+This project explores that idea by building a complete data platform that moves from **raw data → cloud storage → data warehouse → transformations → orchestration → AI**.
 
-This project builds a complete batch data pipeline for a food delivery platform.
+The platform works with:
 
-The pipeline takes raw datasets containing restaurants, customers, food items, menus, orders, order items, and reviews and processes them through multiple stages:
+- **10M+ orders**
+- **~23M order items**
+- **300K customer reviews**
+- Restaurant, customer, food, and menu dimensions
 
-Raw CSV Data
-     │
-     ▼
- Amazon S3
-     │
-     ▼
- Snowflake RAW
-   (Bronze)
-     │
-     ▼
-     dbt
-     │
-     ▼
- Snowflake STAGING
-   (Silver)
-     │
-     ▼
- Snowflake MARTS
-    (Gold)
-     │
-     ├───────────────┐
-     ▼               ▼
- OpenAI AI Layer   Analytics
-     │
-     ├── Review Enrichment
-     ├── RAG Chat
-     └── Text-to-SQL
-             │
-             ▼
-         Streamlit
-
-Apache Airflow orchestrates the complete pipeline.
+The goal was not just to build an AI chatbot, but to understand the **data engineering foundation required to make AI useful and reliable**.
 
 ---
 
-🏗️ Architecture
+## Architecture
 
-"Architecture" (docs/architecture.png)
+```text
+                    ┌──────────────────────┐
+                    │      Local Data      │
+                    │ CSV + Generated Data │
+                    └──────────┬───────────┘
+                               │
+                               ▼
+                    ┌──────────────────────┐
+                    │       AWS S3         │
+                    │     Raw Data Lake    │
+                    └──────────┬───────────┘
+                               │
+                         COPY INTO
+                               │
+                               ▼
+                    ┌──────────────────────┐
+                    │      Snowflake       │
+                    │       RAW Layer      │
+                    └──────────┬───────────┘
+                               │
+                               ▼
+                    ┌──────────────────────┐
+                    │        dbt           │
+                    │  Staging / Silver    │
+                    └──────────┬───────────┘
+                               │
+                               ▼
+                    ┌──────────────────────┐
+                    │      Snowflake       │
+                    │   Gold / Marts       │
+                    └──────────┬───────────┘
+                               │
+                    ┌──────────┴───────────┐
+                    │                      │
+                    ▼                      ▼
+          ┌──────────────────┐   ┌──────────────────┐
+          │     Analytics    │   │    AI Layer      │
+          │ Revenue / SLA /  │   │ Reviews / RAG /  │
+          │ Performance      │   │   Text-to-SQL    │
+          └──────────────────┘   └────────┬─────────┘
+                                          │
+                                          ▼
+                                  Natural Language
+                                      Interface
 
-High-Level Architecture
-
-                   ┌─────────────────────┐
-                   │   Source CSV Files  │
-                   │                     │
-                   │ Restaurants         │
-                   │ Users               │
-                   │ Food                │
-                   │ Menu                │
-                   │ Orders              │
-                   │ Order Items         │
-                   │ Reviews             │
-                   └──────────┬──────────┘
-                              │
-                              ▼
-                   ┌─────────────────────┐
-                   │     Amazon S3       │
-                   │     Data Lake       │
-                   └──────────┬──────────┘
-                              │
-                     Storage Integration
-                              │
-                              ▼
-                   ┌─────────────────────┐
-                   │     Snowflake       │
-                   │                     │
-                   │ RAW / Bronze        │
-                   └──────────┬──────────┘
-                              │
-                              ▼
-                   ┌─────────────────────┐
-                   │        dbt          │
-                   │                     │
-                   │ STAGING / Silver    │
-                   │ MARTS / Gold        │
-                   └──────────┬──────────┘
-                              │
-                ┌─────────────┴─────────────┐
-                ▼                           ▼
-       ┌─────────────────┐       ┌─────────────────┐
-       │     AI Layer    │       │    BI / Data    │
-       │                 │       │    Analytics    │
-       │ LLM Enrichment  │       │                 │
-       │ RAG             │       │ Business Marts  │
-       │ Text-to-SQL     │       │                 │
-       └────────┬────────┘       └─────────────────┘
-                │
-                ▼
-       ┌─────────────────┐
-       │    Streamlit    │
-       │   AI Apps       │
-       └─────────────────┘
-
-                 ▲
-                 │
-       ┌─────────────────┐
-       │ Apache Airflow  │
-       │  Orchestration  │
-       └─────────────────┘
+                    ┌──────────────────────┐
+                    │       Airflow        │
+                    │    Orchestration     │
+                    └──────────────────────┘
+```
 
 ---
 
-🛠️ Technology Stack
+## Tech Stack
 
-Technology| Purpose
-Python| Data processing and AI applications
-Pandas| Data manipulation
-Amazon S3| Cloud data lake
-Snowflake| Cloud data warehouse
-dbt| Data transformation and testing
-Apache Airflow| Pipeline orchestration
-Docker| Containerization
-OpenAI API| LLM-powered analytics
-Streamlit| Interactive AI applications
-SQL| Data transformation and analytics
-Git/GitHub| Version control
+| Layer | Technology |
+|---|---|
+| Programming | Python |
+| Querying | SQL |
+| Cloud Storage | Amazon S3 |
+| Data Warehouse | Snowflake |
+| Transformation | dbt |
+| Orchestration | Apache Airflow |
+| AI / LLM | Hugging Face ecosystem |
+| Embeddings | `BAAI/bge-small-en-v1.5` |
+| LLMs | Qwen / Llama instruction models |
+| Retrieval | RAG |
+| AI Analytics | Natural Language → SQL |
+| Infrastructure | Docker |
+| Version Control | Git / GitHub |
 
 ---
 
-📊 Dataset
+## Data Engineering Pipeline
 
-The project works with Zomato-style food delivery data consisting of:
+### 1. Source Data
+
+The project starts with local CSV datasets containing dimensions such as:
 
 - Restaurants
-- Customers / Users
-- Food items
-- Menus
-- Orders
-- Order items
-- Customer reviews
+- Users
+- Food
+- Menu
 
-The dataset contains large-scale fact data to demonstrate real-world data engineering concepts.
+Large fact datasets are generated to simulate a realistic production workload:
 
-Approximate Data Volume
-
-Dataset| Approximate Records
-Orders| 10 Million
-Order Items| 23 Million
-Reviews| 300,000
-Restaurants| Dimension data
-Users| Dimension data
-Food| Dimension data
-Menu| Dimension data
-
-«Large CSV files are intentionally excluded from Git to avoid committing multi-GB datasets.»
+- 10M+ orders
+- ~23M order items
+- 300K free-text reviews
 
 ---
 
-🗂️ Repository Structure
+### 2. Data Lake — Amazon S3
 
-zomato-ai-data-engineering/
-│
-├── airflow/
-│   ├── dags/
-│   │   └── zomato_batch.py
-│   ├── Dockerfile
-│   ├── docker-compose.yaml
-│   └── example.env
-│
-├── ai/
-│   ├── enrich_reviews.py
-│   ├── rag_chat.py
-│   ├── text_to_sql.py
-│   └── example.env
-│
-├── aws/
-│   └── iam/
-│       ├── s3-read-policy.json
-│       ├── snowflake-role-trust-policy-initial.json
-│       └── snowflake-role-trust-policy-final.json
-│
-├── snowflake/
-│   ├── 01_setup.sql
-│   ├── 02_storage_integration.sql
-│   ├── 03_stage_and_formats.sql
-│   ├── 04_raw_tables.sql
-│   └── 05_copy_into.sql
-│
-├── zomato/
-│   ├── models/
-│   │   ├── staging/
-│   │   └── marts/
-│   ├── macros/
-│   ├── dbt_project.yml
-│   └── profiles.yml
-│
-├── docs/
-│   └── architecture.png
-│
-├── data/
-│   └── *.csv
-│
-├── .gitignore
-└── README.md
+Raw datasets are uploaded to S3 using a table-oriented structure:
 
----
-
-🔄 End-to-End Data Pipeline
-
-1. 📥 Data Ingestion
-
-The pipeline starts with raw CSV files containing Zomato-style food delivery data.
-
-The datasets are organized by table:
-
-data/
-├── restaurants.csv
-├── users.csv
-├── food.csv
-├── menu.csv
-├── orders.csv
-├── order_items.csv
-└── reviews.csv
-
-The files are uploaded to Amazon S3.
-
----
-
-☁️ 2. Amazon S3 Data Lake
-
-Amazon S3 acts as the project's cloud data lake.
-
-Files are organized using a table-based folder structure:
-
-s3://<BUCKET>/raw/
-│
+```text
+raw/
 ├── restaurants/
 ├── users/
 ├── food/
@@ -244,657 +126,356 @@ s3://<BUCKET>/raw/
 ├── orders/
 ├── order_items/
 └── reviews/
+```
 
-This provides a scalable and centralized location for raw data.
+S3 acts as the raw landing zone before warehouse ingestion.
 
 ---
 
-❄️ 3. Snowflake Data Warehouse
+### 3. Data Warehouse — Snowflake
 
-Snowflake is used as the central analytical data warehouse.
+Snowflake is organized into separate layers:
 
-The project creates the following schemas:
-
+```text
 ZOMATO
-│
 ├── RAW
 ├── STAGING
 ├── MARTS
-├── SNAPSHOTS
 └── AI
+```
 
-RAW — Bronze Layer
-
-Raw data is loaded from Amazon S3 into Snowflake using:
-
-COPY INTO
-
-The Snowflake-S3 connection uses a Storage Integration and AWS IAM Role, avoiding the need to store AWS access keys inside the project.
+Raw data is loaded from S3 into Snowflake using `COPY INTO` through a storage integration.
 
 ---
 
-🥉 4. Bronze Layer — RAW
+### 4. Transformation — dbt
 
-The Bronze layer contains data as it arrives from the source.
+dbt is used to transform raw warehouse data into clean and business-ready datasets.
 
-Example:
+The transformation flow follows:
 
-ZOMATO.RAW.ORDERS
-ZOMATO.RAW.ORDER_ITEMS
-ZOMATO.RAW.RESTAURANTS
-ZOMATO.RAW.USERS
-ZOMATO.RAW.FOOD
-ZOMATO.RAW.MENU
-ZOMATO.RAW.REVIEWS
-
-The objective of this layer is to preserve the original source data.
-
----
-
-🥈 5. Silver Layer — STAGING
-
-dbt is used to transform the RAW data into clean and standardized staging models.
-
-Examples of transformations include:
-
-- Data type conversion
-- Column renaming
-- Null handling
-- Email standardization
-- Currency cleanup
-- Deriving delivery status
-- Cleaning restaurant attributes
-- Standardizing source values
-
-Example:
-
+```text
 RAW
  ↓
 STAGING
  ↓
-Clean and standardized data
+CORE / DIMENSIONS + FACTS
+ ↓
+BUSINESS MARTS
+```
 
-The staging layer primarily uses dbt views.
+The project includes concepts such as:
 
----
-
-🥇 6. Gold Layer — MARTS
-
-The Gold layer contains business-ready analytical datasets.
-
-Dimension Models
-
-dim_restaurants
-dim_customer
-dim_food
-dim_date
-
-Fact Models
-
-fct_orders
-fact_order_items
-
-Fact tables use dbt's incremental materialization with a MERGE strategy.
-
-This avoids rebuilding millions of records every time the pipeline runs.
+- Staging models
+- Fact tables
+- Dimension tables
+- Incremental models
+- MERGE-based loading
+- Business marts
+- SCD Type 2 snapshots
 
 ---
 
-📈 Business Analytics Marts
+### 5. Orchestration — Airflow
 
-The project creates business-focused marts to answer important questions.
+The complete workflow is orchestrated using Apache Airflow running in Docker.
 
-Daily City Revenue
+The daily pipeline follows:
 
-Provides metrics such as:
+```text
+reload_raw
+     ↓
+dbt_build_core
+     ↓
+enrich_reviews
+     ↓
+dbt_build_ai
+```
 
-- GMV
-- Revenue
-- Average Order Value
-- Cancellation Rate
-- Daily performance
-
-Restaurant Performance
-
-Helps analyze:
-
-- Restaurant revenue
-- Order volume
-- Customer activity
-- Restaurant performance
-
-Delivery SLA
-
-Analyzes delivery performance using:
-
-- Median delivery time
-- P50 delivery time
-- P90 delivery time
-- City-level performance
-- Hour-level performance
-
-Review Insights
-
-Combines customer reviews with AI-generated information for review analysis.
+This connects the data engineering and AI layers into a repeatable workflow.
 
 ---
 
-🔧 7. dbt
+# AI Layer
 
-dbt is responsible for:
+The AI layer explores three different use cases.
 
-- Data transformation
-- Model dependency management
-- Incremental loading
-- Data quality testing
-- Documentation
-- Business logic
+## 1. AI Review Enrichment
 
-dbt Tests
+Customer reviews contain valuable information that is difficult to analyze using traditional structured columns.
 
-The project includes tests such as:
+The pipeline enriches reviews with AI-generated metadata such as:
 
-unique
-not_null
-relationships
-accepted_values
+- Sentiment
+- Topic / category
 
-A custom reconciliation test is also included to validate data consistency.
-
-Run dbt with:
-
-cd zomato
-
-dbt debug
-
-dbt build --exclude tag:ai
+This makes unstructured customer feedback easier to analyze alongside structured business data.
 
 ---
 
-⚙️ 8. Apache Airflow
+## 2. RAG — Chat with Customer Reviews
 
-Apache Airflow orchestrates the entire batch pipeline.
+The project uses Retrieval-Augmented Generation to allow natural-language interaction with review data.
 
-The main DAG is:
+High-level flow:
 
-zomato_batch
+```text
+Customer Question
+       ↓
+Embedding
+       ↓
+Vector Retrieval
+       ↓
+Relevant Reviews
+       ↓
+LLM
+       ↓
+Answer
+```
 
-Pipeline DAG
-
-┌───────────────┐
-│  reload_raw   │
-└───────┬───────┘
-        │
-        ▼
-┌────────────────────┐
-│ dbt_build_core     │
-│                    │
-│ dbt build + tests  │
-└─────────┬──────────┘
-          │
-          ▼
-┌────────────────────┐
-│ enrich_reviews     │
-│                    │
-│ OpenAI enrichment  │
-└─────────┬──────────┘
-          │
-          ▼
-┌────────────────────┐
-│ dbt_build_ai       │
-│                    │
-│ AI marts           │
-└────────────────────┘
-
-Airflow provides:
-
-- Scheduling
-- Dependency management
-- Task execution
-- Logging
-- Failure handling
-- Pipeline monitoring
+This allows questions to be answered using relevant customer-review context rather than relying only on the model's internal knowledge.
 
 ---
 
-🤖 9. AI Layer
+## 3. Text-to-SQL
 
-One of the key components of this project is the AI layer.
-
-The AI functionality consists of three major components.
-
----
-
-🧠 A. LLM Review Enrichment
-
-The "enrich_reviews.py" script uses an OpenAI model to analyze customer reviews.
-
-Raw review text:
-
-"The food was amazing but delivery was very late."
-
-The LLM converts the review into structured information such as:
-
-{
-  "sentiment": "negative",
-  "topic": "delivery"
-}
-
-The enriched information is stored in:
-
-ZOMATO.AI.REVIEW_ENRICHED
-
-This allows unstructured customer feedback to become queryable analytical data.
-
----
-
-🔎 B. RAG — Chat With Reviews
-
-The RAG application allows users to ask questions about customer reviews.
-
-Example questions:
-
-What are customers complaining about most?
-
-What do customers like about the food?
-
-Which restaurants have the most positive reviews?
-
-What are the major delivery-related complaints?
-
-The application:
-
-User Question
-      ↓
-Create Embedding
-      ↓
-Retrieve Similar Reviews
-      ↓
-LLM Context
-      ↓
-Generate Answer
-      ↓
-Display Sources
-
-This provides answers grounded in the actual review dataset.
-
-The application is built using Streamlit.
-
-Run:
-
-streamlit run ai/rag_chat.py
-
----
-
-💬 C. Text-to-SQL
-
-The Text-to-SQL application allows users to query the Snowflake warehouse using natural language.
+The project also explores asking analytical questions in natural language.
 
 Example:
 
-Which city generated the highest revenue last month?
+```text
+"Which city has the highest revenue?"
+```
 
-The AI converts the question into SQL:
+The system translates the question into SQL:
 
-SELECT
-    city,
-    SUM(revenue) AS total_revenue
-FROM mart_daily_city_revenue
-GROUP BY city
-ORDER BY total_revenue DESC
-LIMIT 1;
+```text
+Natural Language
+       ↓
+LLM
+       ↓
+Generated SQL
+       ↓
+Validation
+       ↓
+Snowflake
+       ↓
+Result
+```
 
-The generated SQL is validated using a SELECT-only safety guard before execution.
-
-Run:
-
-streamlit run ai/text_to_sql.py
-
----
-
-🔐 Security
-
-Credentials are not hard-coded into the source code.
-
-Environment variables are used for:
-
-SNOWFLAKE_ACCOUNT
-SNOWFLAKE_USER
-SNOWFLAKE_PASSWORD
-SNOWFLAKE_DATABASE
-SNOWFLAKE_SCHEMA
-SNOWFLAKE_WAREHOUSE
-OPENAI_API_KEY
-
-For local development:
-
-cp airflow/example.env airflow/.env
-
-Then configure the required credentials.
-
-«Never commit ".env" files, passwords, API keys, AWS credentials, or Snowflake credentials to GitHub.»
+The generated query is restricted to read-only analytical operations before being executed against the warehouse.
 
 ---
 
-🚀 Setup & Installation
+# Project Structure
 
-Prerequisites
+```text
+.
+├── ai/
+│   ├── enrich_reviews.py
+│   ├── hf_worker.py
+│   ├── rag_chat.py
+│   └── text_to_sql.py
+│
+├── airflow/
+│   └── dags/
+│
+├── data/
+│   ├── restaurants.csv
+│   ├── users.csv
+│   ├── food.csv
+│   └── menu.csv
+│
+├── dbt/
+│   ├── models/
+│   │   ├── staging/
+│   │   └── marts/
+│   └── snapshots/
+│
+├── snowflake/
+│   ├── 01_setup.sql
+│   ├── 02_*.sql
+│   ├── 03_*.sql
+│   ├── 04_*.sql
+│   └── 05_copy_into.sql
+│
+├── aws/
+│   ├── iam/
+│   └── policies/
+│
+├── docker/
+│
+└── README.md
+```
 
-Install the following:
+> Directory names may vary slightly depending on the current project version.
 
-- Python 3.x
+---
+
+# Key Data Models
+
+The Gold layer contains analytical models for areas such as:
+
+### Daily City Revenue
+
+Provides city-level business metrics including revenue, order volume, cancellation rate, and average order value.
+
+### Restaurant Performance
+
+Combines restaurant information with order activity and customer ratings to evaluate restaurant-level performance.
+
+### Delivery SLA
+
+Provides delivery-performance metrics for monitoring delivery times and late orders.
+
+### SCD Type 2
+
+A snapshot is used to preserve historical changes to dimensional data rather than overwriting previous values.
+
+---
+
+# Running the Project
+
+## Prerequisites
+
+You'll need:
+
+- Python
 - Docker
-- Docker Compose
-- Git
-- Snowflake account
 - AWS account
-- OpenAI API key
-- dbt with Snowflake adapter
+- Snowflake account
+- dbt
+- Airflow
+- Git
+
+Create a Python virtual environment:
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+```
+
+Install project dependencies:
+
+```bash
+pip install -r requirements.txt
+```
 
 ---
 
-1️⃣ Clone the Repository
+## Configure Environment Variables
 
-git clone <YOUR_REPOSITORY_URL>
+Create a `.env` file with the required credentials and configuration for:
 
-cd zomato-ai-data-engineering
-
----
-
-2️⃣ Configure AWS
-
-Create an S3 bucket and upload the datasets under:
-
-raw/restaurants/
-raw/users/
-raw/food/
-raw/menu/
-raw/orders/
-raw/order_items/
-raw/reviews/
-
-Configure the required IAM policy and role using:
-
-aws/iam/
-
----
-
-3️⃣ Configure Snowflake
-
-Execute the SQL scripts in the following order:
-
-snowflake/01_setup.sql
-snowflake/02_storage_integration.sql
-snowflake/03_stage_and_formats.sql
-snowflake/04_raw_tables.sql
-snowflake/05_copy_into.sql
-
-Important
-
-The S3 → Snowflake integration uses a keyless IAM-based authentication mechanism.
-
-The trust relationship must use the IAM user ARN and external ID provided by Snowflake's storage integration.
-
----
-
-4️⃣ Configure dbt
-
-Navigate to:
-
-cd zomato
-
-Configure your Snowflake credentials.
-
-Then run:
-
-dbt debug
-
-If everything is configured correctly:
-
-Connection test: OK
-
-Run the transformation:
-
-dbt build --exclude tag:ai
-
----
-
-5️⃣ Start Airflow
-
-Navigate to:
-
-cd airflow
-
-Create the environment file:
-
-cp example.env .env
-
-Configure:
-
-SNOWFLAKE_*
-OPENAI_API_KEY
-SAMPLE_N
-
-Build the Docker environment:
-
-docker compose build
-
-Start Airflow:
-
-docker compose up -d
-
-Open:
-
-http://localhost:8080
-
-Then:
-
-1. Open the Airflow UI
-2. Locate "zomato_batch"
-3. Unpause the DAG
-4. Trigger the pipeline
-
----
-
-6️⃣ Run AI Review Enrichment
-
-Set the OpenAI API key:
-
-export OPENAI_API_KEY=sk-...
-
-Run:
-
-python ai/enrich_reviews.py
-
----
-
-7️⃣ Run RAG Application
-
-streamlit run ai/rag_chat.py
-
----
-
-8️⃣ Run Text-to-SQL Application
-
-streamlit run ai/text_to_sql.py
-
----
-
-📊 Key Data Engineering Concepts Demonstrated
-
-This project demonstrates several real-world data engineering concepts:
-
-Data Engineering
-
-- Batch data processing
-- ETL / ELT
-- Data lake architecture
-- Cloud data warehouse
-- Large-scale datasets
-- Incremental processing
-- MERGE strategy
-
+```text
 AWS
-
-- Amazon S3
-- IAM
-- IAM policies
-- IAM roles
-- Trust relationships
-- Snowflake Storage Integration
-
 Snowflake
+Hugging Face
+```
 
-- Warehouses
-- Databases
-- Schemas
-- External stages
-- File formats
-- COPY INTO
-- Storage integrations
-- Role-based access
+**Do not commit credentials or secrets to GitHub.**
 
-dbt
+Add `.env` to `.gitignore`:
 
-- Staging models
-- Dimension models
-- Fact models
-- Incremental models
-- Snapshots
-- Macros
-- Tests
-- Dependency management
-
-Airflow
-
-- DAGs
-- Task dependencies
-- Scheduling
-- Docker deployment
-- Pipeline orchestration
-- Failure handling
-
-AI / GenAI
-
-- LLM data enrichment
-- Structured output generation
-- Embeddings
-- Retrieval-Augmented Generation
-- Natural Language → SQL
-- SQL validation
-- AI-powered analytics
+```text
+.env
+```
 
 ---
 
-📌 Key Features
+## Run dbt
 
-✅ End-to-end cloud data pipeline
+From the dbt project directory:
 
-✅ Amazon S3 data lake
-
-✅ Snowflake cloud data warehouse
-
-✅ Medallion architecture
-
-✅ dbt transformations
-
-✅ Incremental fact loading
-
-✅ Data quality testing
-
-✅ Apache Airflow orchestration
-
-✅ Dockerized Airflow environment
-
-✅ OpenAI-powered review enrichment
-
-✅ RAG-based review chatbot
-
-✅ Natural language Text-to-SQL
-
-✅ Streamlit AI applications
-
-✅ Secure environment-based credentials
+```bash
+dbt debug
+dbt run
+dbt test
+```
 
 ---
 
-🔮 Future Enhancements
+## Run Airflow
 
-Potential improvements include:
+Start the Airflow environment using Docker Compose:
 
-- Real-time streaming using Kafka
-- AWS Glue integration
-- AWS Lambda-based ingestion
-- CI/CD using GitHub Actions
-- Data observability
-- Great Expectations integration
-- Snowflake Dynamic Tables
-- More advanced AI agents
-- Role-based Streamlit authentication
-- Automated data quality monitoring
-- Power BI / Tableau dashboards
-- Production deployment on AWS
+```bash
+docker compose up
+```
+
+Then trigger the project DAG from the Airflow UI.
 
 ---
 
-🎯 Project Outcome
+## Run the AI Components
 
-This project demonstrates how raw food delivery data can be transformed into a scalable analytical platform:
+The AI scripts can be run independently depending on the use case:
 
-Raw Data
-   ↓
-Amazon S3
-   ↓
-Snowflake Bronze
-   ↓
-dbt Silver
-   ↓
-dbt Gold
-   ↓
-Business Analytics
-   ↓
-AI Enrichment
-   ↓
-RAG + Text-to-SQL
-   ↓
-Interactive Applications
+```bash
+python ai/enrich_reviews.py
+python ai/rag_chat.py
+python ai/text_to_sql.py
+```
 
-The combination of traditional data engineering and Generative AI makes the platform capable of both structured analytics and natural-language exploration of data.
+The exact commands may depend on your configured environment and project version.
 
 ---
 
-👨‍💻 Skills Demonstrated
+# What I Learned
 
-Python
-SQL
-Pandas
-AWS S3
-AWS IAM
-Snowflake
-dbt
-Apache Airflow
-Docker
-OpenAI API
-RAG
-Embeddings
-Text-to-SQL
-Streamlit
-Git/GitHub
-Data Modeling
-ETL / ELT
-Data Quality
-Cloud Data Engineering
+This project started as a simple idea around making food discovery easier, but the engineering challenges quickly became more interesting.
 
----
+Some of the main areas I explored:
 
-📄 License
+- Designing an end-to-end data pipeline
+- Working with large synthetic datasets
+- Separating raw, staging, and business-ready warehouse layers
+- Building incremental dbt models
+- Using MERGE-based loading
+- Managing historical dimension changes with SCD Type 2
+- Orchestrating data + AI workflows with Airflow
+- Working with structured and unstructured data together
+- Building RAG pipelines
+- Converting natural-language questions into SQL
+- Validating AI-generated SQL before execution
 
-This project is intended for educational and portfolio purposes.
+The biggest takeaway:
+
+> **Good AI experiences depend on good data foundations.**
 
 ---
 
-⭐ Acknowledgements
+# Future Improvements
 
-This project was developed as a hands-on implementation of an end-to-end modern data engineering and AI analytics architecture.
+Some areas I plan to explore next:
 
-If you find this project useful, consider giving the repository a ⭐.
+- More robust data quality checks
+- Better SQL validation and query planning
+- Improved retrieval and ranking for RAG
+- More analytical marts
+- Real-time / streaming ingestion
+- Monitoring and observability
+- CI/CD for the data platform
+- Better evaluation of AI-generated answers and SQL
+
+---
+
+# Disclaimer
+
+This is a **personal hobby / learning project** created to explore data engineering, cloud data platforms, analytics engineering, and AI.
+
+It is inspired by common food-delivery data and business scenarios and is **not affiliated with or endorsed by any food-delivery company**.
+
+---
+
+## Author
+
+**Vishnu Nukala**
+
+Data Engineering • Cloud • DevOps • AI
+
+Building projects, experimenting with technologies, and documenting what I learn.
+
+---
+
+⭐ If you find the project interesting, feel free to explore the code and follow along with the **Data Engineering Demos** series.

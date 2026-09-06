@@ -3,3 +3,6 @@ datasets/demo
 jaffle_shop
 key.txt
 rsa_key.pub
+ai/.env
+ai/*.p8
+ai/review_embedding.parquet
